@@ -3,7 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const LoadingScreen: React.FC = () => {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-white">
+        <div className="flex items-center justify-center min-h-screen w-full">
             <CircularProgress />
         </div>
     );

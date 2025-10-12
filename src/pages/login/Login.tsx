@@ -40,13 +40,14 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+        <div className="min-h-screen bg-sky-300 p-8 w-full flex items-center justify-center  px-4">
+
             <Paper elevation={3} className="p-8 max-w-md w-full">
                 <Typography variant="h5" className="mb-6 text-center font-semibold">
                     {isSignup ? 'Sign Up' : 'Login'}
                 </Typography>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4 w-6/12">
                     {isSignup && (
                         <TextField
                             fullWidth
