@@ -45,7 +45,7 @@ const Login: React.FC = () => {
     const password = watch('password');
 
     return (
-        <div className="min-h-screen bg-sky-900 w-6/12 flex items-center justify-center px-4">
+        <div className="min-h-screen  w-full flex items-center justify-center ">
             <Paper elevation={3} className="p-8 max-w-md w-full">
                 <Typography variant="h5" className="mb-6 text-center font-semibold">
                     {isSignup ? 'Sign Up' : 'Login'}
