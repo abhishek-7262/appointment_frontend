@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import { Login } from './lazy/global.pages'
 
-import { AdminDashboard, Dashboard } from './lazy/admin.pages'
+import { AdminDashboard, Dashboard, AdminSlot } from './lazy/admin.pages'
 
 const App: React.FC = () => {
   return (
@@ -15,6 +15,7 @@ const App: React.FC = () => {
 
         <Route path='/admin' element={<AdminDashboard />}>
           <Route path="" element={<Dashboard />}></Route>
+          <Route path="slots" element={<AdminSlot />}></Route>
         </Route>
       </Routes>
     </Suspense>
