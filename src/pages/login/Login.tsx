@@ -6,85 +6,101 @@ import {
     Box,
     Paper,
 } from '@mui/material';
+import { useForm } from 'react-hook-form';
+
+type FormValues = {
+    name?: string;
+    email: string;
+    password: string;
+    confirmPassword?: string;
+};
 
 const Login: React.FC = () => {
     const [isSignup, setIsSignup] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-    });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        watch,
+        formState: { errors },
+    } = useForm<FormValues>();
 
     const toggleMode = () => {
         setIsSignup((prev) => !prev);
-        setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+        reset(); // Clear form on mode switch
     };
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = (data: FormValues) => {
         if (isSignup) {
-            console.log('Signup data:', formData);
+            console.log('Signup data:', data);
         } else {
             console.log('Login data:', {
-                email: formData.email,
-                password: formData.password,
+                email: data.email,
+                password: data.password,
             });
         }
     };
 
-    return (
-        <div className="min-h-screen bg-sky-300 p-8 w-full flex items-center justify-center  px-4">
+    const password = watch('password');
 
+    return (
+        <div className="min-h-screen bg-sky-900 w-6/12 flex items-center justify-center px-4">
             <Paper elevation={3} className="p-8 max-w-md w-full">
                 <Typography variant="h5" className="mb-6 text-center font-semibold">
                     {isSignup ? 'Sign Up' : 'Login'}
                 </Typography>
 
-                <form onSubmit={handleSubmit} className="space-y-4 w-6/12">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     {isSignup && (
                         <TextField
                             fullWidth
                             label="Name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
+                            {...register('name', { required: 'Name is required' })}
+                            error={!!errors.name}
+                            helperText={errors.name?.message}
                         />
                     )}
                     <TextField
                         fullWidth
                         label="Email"
-                        name="email"
                         type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
+                        {...register('email', {
+                            required: 'Email is required',
+                            pattern: {
+                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: 'Invalid email address',
+                            },
+                        })}
+                        error={!!errors.email}
+                        helperText={errors.email?.message}
                     />
                     <TextField
                         fullWidth
                         label="Password"
-                        name="password"
                         type="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
+                        {...register('password', {
+                            required: 'Password is required',
+                            minLength: {
+                                value: 6,
+                                message: 'Password must be at least 6 characters',
+                            },
+                        })}
+                        error={!!errors.password}
+                        helperText={errors.password?.message}
                     />
                     {isSignup && (
                         <TextField
                             fullWidth
                             label="Confirm Password"
-                            name="confirmPassword"
                             type="password"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
+                            {...register('confirmPassword', {
+                                required: 'Please confirm your password',
+                                validate: (value) =>
+                                    value === password || 'Passwords do not match',
+                            })}
+                            error={!!errors.confirmPassword}
+                            helperText={errors.confirmPassword?.message}
                         />
                     )}
                     <Button type="submit" variant="contained" color="primary" fullWidth>
