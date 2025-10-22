@@ -7,6 +7,7 @@ import {
     Paper,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import axiosInstance from '../../api/axiosInstance';
 
 type FormValues = {
     name?: string;
@@ -31,7 +32,12 @@ const Login: React.FC = () => {
         reset(); // Clear form on mode switch
     };
 
-    const onSubmit = (data: FormValues) => {
+    const onSubmit = async (data: FormValues) => {
+        const payload = {
+            email: data.email,
+            password: data.password,
+        }
+
         if (isSignup) {
             console.log('Signup data:', data);
         } else {
@@ -39,6 +45,12 @@ const Login: React.FC = () => {
                 email: data.email,
                 password: data.password,
             });
+
+
+
+            const response = await axiosInstance.post(`/auth/login`, payload)
+            console.log(response, " login")
+            localStorage.setItem('token', 'access_token')
         }
     };
 
