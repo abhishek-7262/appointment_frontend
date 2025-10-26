@@ -1,11 +1,25 @@
-import React from 'react'
+import React from "react";
+import Button from "../../../../components/buttons/Button";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard: React.FC = () => {
-    return (
-        <div>
-            <p className='text-center text-xl font-medium '>Dashboard</p>
-        </div>
-    )
-}
+  const navigate = useNavigate();
+
+  return (
+    <div>
+      <p className="text-center text-xl font-medium ">Dashboard</p>
+
+      <div className="w-6/12 mx-auto bg-gray-300">
+        <Button
+          name="Book Slot"
+          type="button"
+          onClick={() => {
+            navigate("slots");
+          }}
+        />
+      </div>
+    </div>
+  );
+};
 
 export default Dashboard;
