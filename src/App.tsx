@@ -6,7 +6,11 @@ import { Login } from "./lazy/global.pages";
 
 import { AdminDashboard, Dashboard, AdminSlot } from "./lazy/admin.pages";
 
-import { UserDashboard, UserDashboardPage } from "./lazy/user.pages";
+import {
+  UserDashboard,
+  UserDashboardPage,
+  UserAppointmentPage,
+} from "./lazy/user.pages";
 
 const App: React.FC = () => {
   return (
@@ -21,7 +25,10 @@ const App: React.FC = () => {
 
         <Route path="/user" element={<UserDashboard />}>
           <Route path="" element={<UserDashboardPage />}></Route>
-          {/* <Route path="slots" element={<AdminSlot />}></Route> */}
+          <Route
+            path="available-appointments"
+            element={<UserAppointmentPage />}
+          ></Route>
         </Route>
       </Routes>
     </Suspense>

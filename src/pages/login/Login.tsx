@@ -46,7 +46,7 @@ const Login: React.FC = () => {
       console.log(response.data, " login");
 
       if (response.status == 200 || response.status == 201) {
-        localStorage.setItem("token", response.data?.access_token);
+        localStorage.setItem("authToken", response.data?.access_token);
         localStorage.setItem("role", response.data?.user.role);
 
         if (response.data.user.role == "user") {
