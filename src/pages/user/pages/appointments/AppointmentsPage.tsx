@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../../api/axiosInstance";
+import AppointmentCard from "./components/appointmentCard/AppointmentCard";
 
 const AppointmentsPage: React.FC = () => {
   const [data, setData] = useState();
@@ -23,7 +24,32 @@ const AppointmentsPage: React.FC = () => {
     getData();
   }, []);
 
-  return <div>AppointmentsPage</div>;
+  const handleBook = (id: string) => {
+    setData((prev) =>
+      prev?.map((slot) =>
+        slot._id === id ? { ...slot, isBooked: true } : slot
+      )
+    );
+    alert("Slot booked successfully!");
+  };
+
+  return (
+    <div>
+      <p>Available Appointment Slots </p>
+
+      <div>
+        {data?.map((slot) => {
+          return (
+            <AppointmentCard
+              key={slot._id}
+              slot={slot}
+              onBook={handleBook}
+            ></AppointmentCard>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default AppointmentsPage;
