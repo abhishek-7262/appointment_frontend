@@ -1,6 +1,6 @@
 // SlotCard.tsx
 import React from "react";
-// import { Slot } from "./types";
+import type { Slot, User } from "../../../../../../main.interface";
 import Button from "@mui/material/Button";
 
 interface SlotCardProps {
@@ -8,27 +8,9 @@ interface SlotCardProps {
   onBook: (id: string) => void;
 }
 
-// types.ts
-export interface User {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-}
-
-export interface Slot {
-  _id: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  duration: number;
-  createdBy: User;
-  isBooked: boolean;
-}
-
 const AppointmentCard: React.FC<SlotCardProps> = ({ slot, onBook }) => {
   return (
-    <div className="border rounded-lg shadow-md p-4 mb-4 bg-white hover:shadow-lg transition-shadow">
+    <div className="w-7/12 mx-auto border rounded-lg shadow-md p-4 mb-4 bg-white hover:shadow-lg transition-shadow">
       <h2 className="text-lg font-semibold mb-2">Date: {slot.date}</h2>
       <p className="mb-1">
         Time: {slot.startTime} - {slot.endTime}

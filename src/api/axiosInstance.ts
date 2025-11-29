@@ -1,29 +1,42 @@
-import axios from 'axios';
+import axios from "axios";
+import { showSnackbar } from "./snackbar";
 
-// Get the base URL from the environment variable
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const axiosInstance = axios.create({
-    baseURL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
+  baseURL,
+  headers: { "Content-Type": "application/json" },
 });
 
-// Add a request interceptor to include common headers like auth token
+// ✅ Request interceptor (for token only)
 axiosInstance.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('authToken'); // Or use cookies or state management
-
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
+  (config) => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// ✅ Response interceptor (this catches 400, 401, 403, 404, 500, etc)
+axiosInstance.interceptors.response.use(
+  (response) => response,
+
+  (error) => {
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.response?.statusText ||
+      error.message;
+
+    showSnackbar(message, "error");
+
+    return Promise.reject(error);
+  }
 );
 
 export default axiosInstance;

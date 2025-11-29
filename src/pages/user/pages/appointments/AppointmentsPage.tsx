@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../../api/axiosInstance";
 import AppointmentCard from "./components/appointmentCard/AppointmentCard";
+import { useSnackbar } from "notistack";
 
 const AppointmentsPage: React.FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [data, setData] = useState();
 
   const getData = async () => {
     try {
       const response = await axiosInstance.post(`/slots/getAll`, {
-        startDate: "2025-12-01",
-        endDate: "2025-12-05",
+        startDate: "2025-11-01",
+        endDate: "2025-12-31",
         page: 1,
-        limit: 10,
+        limit: 20,
       });
       console.log(response.data.data, "allApp");
       setData(response.data.data);
@@ -24,13 +26,14 @@ const AppointmentsPage: React.FC = () => {
     getData();
   }, []);
 
-  const handleBook = (id: string) => {
-    setData((prev) =>
-      prev?.map((slot) =>
-        slot._id === id ? { ...slot, isBooked: true } : slot
-      )
-    );
-    alert("Slot booked successfully!");
+  const handleBook = async (id: string) => {
+    try {
+      const response = await axiosInstance.post(`/bookings/${id}`);
+      console.log(response, "book");
+      if (response.status == 201) {
+        enqueueSnackbar("Appointment booked", { variant: "success" });
+      }
+    } catch (error) {}
   };
 
   return (
