@@ -3,7 +3,7 @@ import AppointmentSlotForm from "./components/AppointmentSlotForm";
 
 const Slot: React.FC = () => {
   return (
-    <div>
+    <div className="w-full">
       {/* <p>Create Slots</p> */}
 
       <div>
