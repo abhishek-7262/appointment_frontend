@@ -18,5 +18,5 @@ export interface User {
 export type MenuItem = {
   text: string;
   icon: React.ReactNode;
-  link: string;
+  path: string;
 };

@@ -34,10 +34,10 @@ const Navbar: React.FC = () => {
   };
 
   const menuItems: MenuItem[] = [
-    { text: "Dashboard", icon: <HomeIcon />, link: "/" },
-    { text: "Slots", icon: <InfoIcon />, link: "slots" },
-    { text: "Profile", icon: <InfoIcon />, link: "" },
-    { text: "Logout", icon: <InfoIcon />, link: "" },
+    { text: "Dashboard", icon: <HomeIcon />, path: "/admin" },
+    { text: "Slots", icon: <InfoIcon />, path: "slots" },
+    { text: "Profile", icon: <InfoIcon />, path: "" },
+    { text: "Logout", icon: <InfoIcon />, path: "" },
   ];
 
   const drawerContent = (
@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
       <List>
         {menuItems.map((item, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => navigate(`${item.link}`)}>
+            <ListItemButton onClick={() => navigate(`${item.path}`)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
