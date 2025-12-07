@@ -14,3 +14,9 @@ export interface User {
   email: string;
   role: string;
 }
+
+export type MenuItem = {
+  text: string;
+  icon: React.ReactNode;
+  link: string;
+};

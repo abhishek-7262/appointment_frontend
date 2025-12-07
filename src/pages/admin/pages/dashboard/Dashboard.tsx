@@ -7,9 +7,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div>
-      <p className="text-center text-xl font-medium ">Dashboard</p>
-
-      <div className="w-6/12 mx-auto bg-gray-300">
+      {/* <div className="w-6/12 mx-auto bg-gray-300">
         <Button
           name="Book Slot"
           type="button"
@@ -17,7 +15,7 @@ const Dashboard: React.FC = () => {
             navigate("slots");
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 };
