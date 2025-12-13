@@ -2,9 +2,14 @@ import React, { Suspense } from "react";
 import LoadingScreen from "./components/loading-screen/LoadingScreen";
 import { Routes, Route } from "react-router-dom";
 
-import { Login } from "./lazy/global.pages";
+import { Login, CommonOutlet } from "./lazy/global.pages";
 
-import { AdminDashboard, Dashboard, AdminSlot } from "./lazy/admin.pages";
+import {
+  AdminDashboard,
+  Dashboard,
+  AdminSlot,
+  NewSlotPage,
+} from "./lazy/admin.pages";
 
 import {
   UserDashboard,
@@ -20,7 +25,10 @@ const App: React.FC = () => {
 
         <Route path="/admin" element={<AdminDashboard />}>
           <Route path="" element={<Dashboard />}></Route>
-          <Route path="slots" element={<AdminSlot />}></Route>
+          <Route path="slots" element={<CommonOutlet />}>
+            <Route path="" element={<AdminSlot />}></Route>
+            <Route path="newSlot" element={<NewSlotPage />}></Route>
+          </Route>
         </Route>
 
         <Route path="/user" element={<UserDashboard />}>

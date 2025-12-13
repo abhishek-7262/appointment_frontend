@@ -20,3 +20,7 @@ export type MenuItem = {
   icon: React.ReactNode;
   path: string;
 };
+
+export interface Itext {
+  str: string;
+}
