@@ -4,7 +4,7 @@ import Heading from "../../../../../../components/text/Heading";
 
 const NewSlot: React.FC = () => {
   return (
-    <div>
+    <div className="w-full">
       <Heading str="New Slot"></Heading>
       <AppointmentSlotForm></AppointmentSlotForm>
     </div>
