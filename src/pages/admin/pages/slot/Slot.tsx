@@ -4,6 +4,7 @@ import Button from "../../../../components/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../api/axiosInstance";
 import CustomTable from "../../../../components/table/CustomTable";
+import { TablePagination } from "@mui/material";
 
 const columns = [
   { label: "Date", field: "date" },
@@ -34,18 +35,21 @@ const Slot: React.FC = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [totalDocs, setTotalDocs] = useState(0);
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
   const getData = async () => {
     try {
       const response = await axiosInstance.post(`/slots/getAll`, {
         //   "startDate": "2025-12-01",
         //   "endDate": "2025-12-05",
-        page: 1,
+        page: page + 1,
         limit: 2,
       });
       console.log(response.data, " slotss");
       setData(response.data.data);
       setTotalDocs(response.data.total);
+      setPage(response.data.page);
     } catch (error) {
       console.log(error);
     }
@@ -54,6 +58,20 @@ const Slot: React.FC = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  const handleChangePage = (
+    _event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <div className="w-full">
@@ -70,6 +88,17 @@ const Slot: React.FC = () => {
       <Heading str="Booked Slots"></Heading>
       <div className="w-full m-2">
         <CustomTable columns={columns} rows={data} keyField="id"></CustomTable>
+      </div>
+
+      <div className="w-full flex justify-end">
+        <TablePagination
+          count={totalDocs}
+          page={page}
+          onPageChange={handleChangePage}
+          labelRowsPerPage="Limit"
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </div>
     </div>
   );
