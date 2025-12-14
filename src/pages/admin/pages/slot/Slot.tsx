@@ -34,7 +34,7 @@ const columns = [
 const Slot: React.FC = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [totalDocs, setTotalDocs] = useState(0);
+  const [totalDocs, setTotalDocs] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
@@ -44,12 +44,12 @@ const Slot: React.FC = () => {
         //   "startDate": "2025-12-01",
         //   "endDate": "2025-12-05",
         page: page + 1,
-        limit: 2,
+        limit: rowsPerPage,
       });
       console.log(response.data, " slotss");
       setData(response.data.data);
-      setTotalDocs(response.data.total);
-      setPage(response.data.page);
+      setTotalDocs(Number(response.data.total));
+      setPage(response.data.page - 1);
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +63,7 @@ const Slot: React.FC = () => {
     _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
-    setPage(newPage);
+    setPage(Number(newPage));
   };
 
   const handleChangeRowsPerPage = (
